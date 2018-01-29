@@ -19,20 +19,24 @@ public class TaskController {
     private MyDemoService myDemoService;
 
     @RequestMapping("/tasks")
-    public List<String> getManagerTasks() {
+    public List<TaskPresentation> getManagerTasks() {
         return myDemoService.getGroupTasks("managers").stream()
-                .map(task -> {
-                    return task.getId()+"::"+task.getProcessInstanceId()+ ":"+task.getName()+":"+task.getDescription();
-                }).collect(Collectors.toList());
+                .map(task -> new TaskPresentation(task.getId(),
+                        task.getProcessInstanceId(),
+                        task.getExecutionId(),
+                        task.getName(),
+                        task.getCreateTime(),
+                        task.getTaskDefinitionKey()))
+                .collect(Collectors.toList());
     }
 
     @PostMapping("/start")
-    public String startProcess(){
+    public String startProcess() {
         Map<String, Object> variables = new HashMap<>();
         variables.put("employee", "Michael Chen");
         variables.put("nrOfHolidays", 9);
         variables.put("description", "I want to enjoy holiday..........");
-        myDemoService.startProcess("holidayRequest",variables);
+        myDemoService.startProcess("holidayRequest", variables);
         return "OK";
     }
 
