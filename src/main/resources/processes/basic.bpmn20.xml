@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:flowable="http://flowable.org/bpmn" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             targetNamespace="http://www.omg.org/spec/BPMN/20100524/MODEL">
+
+    <process id="waiter">
+
+        <startEvent id="start"/>
+
+        <sequenceFlow id="flow1" sourceRef="start" targetRef="javaService1"/>
+        <serviceTask id="javaService1" flowable:class="cn.mxleader.flowable.delegate.DelegateServiceTask"/>
+        <sequenceFlow sourceRef="javaService1" targetRef="service1"/>
+
+        <scriptTask id="service1" scriptFormat="groovy">
+            <script>
+                println 'customerId = ' + customerId
+            </script>
+        </scriptTask>
+
+        <sequenceFlow id="flow2" sourceRef="service1" targetRef="end"/>
+
+        <endEvent id="end"/>
+
+    </process>
+
+</definitions>
