@@ -36,4 +36,11 @@ public class MyDemoService {
         taskService.complete(task.getId(), variables);
     }
 
+    public void roobackTask(Task task){
+        /*Map<String, Object> variables = new HashMap<>();
+        variables.put("approved", true);
+        runtimeService.createChangeActivityStateBuilder().processInstanceId(task.getProcessInstanceId()).cancelActivityId(task.getId()).startActivityId(task.get).changeState();
+*/
+    }
+
 }
