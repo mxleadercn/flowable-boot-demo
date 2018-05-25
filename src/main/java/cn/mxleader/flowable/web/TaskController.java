@@ -6,7 +6,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
+import reactor.util.function.Tuple2;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,15 +22,17 @@ public class TaskController {
     private MyDemoService myDemoService;
 
     @RequestMapping("/tasks")
-    public List<TaskPresentation> getManagerTasks() {
-        return myDemoService.getGroupTasks("managers").stream()
-                .map(task -> new TaskPresentation(task.getId(),
-                        task.getProcessInstanceId(),
-                        task.getExecutionId(),
-                        task.getName(),
-                        task.getCreateTime(),
-                        task.getTaskDefinitionKey()))
-                .collect(Collectors.toList());
+    public Flux<TaskPresentation> getManagerTasks() {
+        Flux<Long> interval = Flux.interval(Duration.ofMillis(500));
+        Flux<TaskPresentation> events = Flux.fromStream(
+                myDemoService.getGroupTasks("managers").stream()
+                        .map(task -> new TaskPresentation(task.getId(),
+                                task.getProcessInstanceId(),
+                                task.getExecutionId(),
+                                task.getName(),
+                                task.getCreateTime(),
+                                task.getTaskDefinitionKey())));
+        return Flux.zip(interval, events).map(Tuple2::getT2);
     }
 
     @PostMapping("/start")

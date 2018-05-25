@@ -1,8 +1,11 @@
 package cn.mxleader.flowable;
 
 import cn.mxleader.flowable.service.MyDemoService;
+import org.flowable.common.engine.impl.persistence.StrongUuidGenerator;
 import org.flowable.engine.RuntimeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.flowable.engine.impl.db.DbIdGenerator;
+import org.flowable.spring.SpringProcessEngineConfiguration;
+import org.flowable.spring.boot.EngineConfigurationConfigurer;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,7 +17,13 @@ import java.util.Map;
 
 @SpringBootApplication
 public class FlowableDemoApplication {
-
+/*
+	@Bean
+	public EngineConfigurationConfigurer<SpringProcessEngineConfiguration> processEngineDbIdGeneratorConfigurer() {
+		//return engineConfiguration -> engineConfiguration.setIdGenerator(new StrongUuidGenerator());
+		return engineConfiguration -> engineConfiguration.setIdGenerator(new DbIdGenerator());
+	}
+	*/
 	@Bean
 	CommandLineRunner basics(final RuntimeService runtimeService) {
 		return args->runtimeService.startProcessInstanceByKey("waiter",
