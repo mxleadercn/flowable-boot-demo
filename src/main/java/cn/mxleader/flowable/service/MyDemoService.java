@@ -1,5 +1,6 @@
 package cn.mxleader.flowable.service;
 
+import cn.mxleader.flowable.CustomEventListener;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
 import org.flowable.engine.runtime.ProcessInstance;
@@ -23,6 +24,7 @@ public class MyDemoService {
     }
 
     public ProcessInstance startProcess(String processKey, Map<String, Object> variables) {
+        runtimeService.addEventListener(new CustomEventListener());
         return runtimeService.startProcessInstanceByKey(processKey, variables);
     }
 

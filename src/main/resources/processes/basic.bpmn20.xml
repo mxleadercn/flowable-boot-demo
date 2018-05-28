@@ -8,7 +8,9 @@
 
         <sequenceFlow id="flow1" sourceRef="start" targetRef="javaService1"/>
         <serviceTask id="javaService1" flowable:class="cn.mxleader.flowable.delegate.DelegateServiceTask"/>
-        <sequenceFlow sourceRef="javaService1" targetRef="service1"/>
+        <sequenceFlow sourceRef="javaService1" targetRef="javaService2"/>
+        <serviceTask id="javaService2" name="Store resume" flowable:expression="${customService.storeResume()}"/>
+        <sequenceFlow sourceRef="javaService2" targetRef="service1"/>
 
         <scriptTask id="service1" scriptFormat="groovy">
             <script>
