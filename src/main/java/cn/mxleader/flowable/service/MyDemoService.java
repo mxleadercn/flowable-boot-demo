@@ -1,6 +1,6 @@
 package cn.mxleader.flowable.service;
 
-import cn.mxleader.flowable.CustomEventListener;
+import cn.mxleader.flowable.process.CustomEventListener;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
 import org.flowable.engine.runtime.ProcessInstance;
