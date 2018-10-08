@@ -23,7 +23,7 @@ public class TaskController {
 
     @RequestMapping("/tasks")
     public Flux<TaskPresentation> getManagerTasks() {
-        Flux<Long> interval = Flux.interval(Duration.ofMillis(500));
+        //Flux<Long> interval = Flux.interval(Duration.ofMillis(500));
         Flux<TaskPresentation> events = Flux.fromStream(
                 myDemoService.getGroupTasks("managers").stream()
                         .map(task -> new TaskPresentation(task.getId(),
@@ -32,7 +32,8 @@ public class TaskController {
                                 task.getName(),
                                 task.getCreateTime(),
                                 task.getTaskDefinitionKey())));
-        return Flux.zip(interval, events).map(Tuple2::getT2);
+        //return Flux.zip(interval, events).map(Tuple2::getT2);
+        return events;
     }
 
     @PostMapping("/start")

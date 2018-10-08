@@ -2,7 +2,7 @@ package cn.mxleader.flowable.process;
 
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("customService")
 public class CustomService {
 
     public void storeResume() {
